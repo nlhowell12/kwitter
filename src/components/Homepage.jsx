@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import kiwi from '../kiwi.jpg';
 import '../App.css';
+import { connect } from 'react-redux'
+import { login } from '../actions'
+
+
 
 class Homepage extends Component {
+      loginFetch = (username, password) => {
+        const { dispatch } = this.props;
+        let loginMethod = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            username,
+            password
+          }),
+          mode: 'cors'
+        }
+        fetch('https://kwitter-api.herokuapp.com/auth/login', loginMethod)
+          .then(response => response.json())
+          .then(data => dispatch(login(username, data.token)))
+      }
     render() {
       return (
         <div className="Homepage">
@@ -13,11 +32,11 @@ class Homepage extends Component {
           <p className="heading">
             Click Login to start Kwitting or Sign Up to make an account!!!
           </p>
-          <button class = "login">Login</button>
-          <button class = "signup">Sign Up!!</button>
+          <button class = "login" >Login</button>
+          <button class = "signup" onClick={evt => this.loginFetch('test', 'test')}>Sign Up!!</button>
         </div>
       );
     }
   }
   
-  export default Homepage;
+  export default connect()(Homepage);
