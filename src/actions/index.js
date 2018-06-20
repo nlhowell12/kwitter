@@ -15,13 +15,22 @@ export const register = (username, password, displayName) => {
         type: REGISTER,
         user: {
             username,
-            password,
             displayName
         }
     }
 }
 
 export const login = (username, password) => {
+    let loginMethod = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: {
+            username,
+            password
+        }
+    }
+    fetch('https://kwitter-api.herokuapp.com//auth/login', loginMethod)
+        .then(response => response.json())
     return {
         type: LOGIN,
         user: {
@@ -37,7 +46,19 @@ export const logout = () => {
     }
 }
 
-export const like = (userId, messageId) => {
+export const like = (userId, messageId, token) => {
+    let method = {
+        method: 'POST',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+        },
+        body: {
+            userId,
+            messageId
+        } 
+    }
+    fetch('https://kwitter-api.herokuapp.com/likes', method)
     return {
         type: LIKE,
         like: {
@@ -95,5 +116,24 @@ export const delUser = (id) => {
     return {
         type: DEL_USER,
         id
+    }
+}
+
+// THUNKS
+
+export const registerFetch = (username, password, displayName) => {
+    return dispatch => {
+        let regMethod = {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: {
+                username,
+                password,
+                displayName
+            }
+        }
+        return fetch('https://kwitter-api.herokuapp.com/auth/register', regMethod)
+                .then(data => dispatch(register(data.username, data.displayName)))
+                .catch(error => {throw(error)})
     }
 }
