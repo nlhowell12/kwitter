@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import kiwi from './kiwi.jpg';
 import './App.css';
 
 class App extends Component {
@@ -7,12 +7,14 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <img src={kiwi} className="App-logo" alt="kiwi" />
+          <h1 className="App-title">Welcome to Kwitter</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+        <p className="heading">
+          Click Login to start Kwitting or Sign Up to make an account!!!
         </p>
+        <button class = "login">Login</button>
+        <button class = "signup">Sign Up!!</button>
       </div>
     );
   }
