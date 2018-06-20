@@ -13,7 +13,7 @@ class Userfeed extends Component {
                 </div>
                 <div id='messageFeed'>
                 <input type="text" id='newMessage' placeholder={"Start a new kwit here"}/>
-                    {messages.map((message, id) => <Message key={id} text={message.text} username={message.username}></Message>)}
+                    {messages.map((message, id) => <Message key={id} text={message.text} username={message.username} messageId={message.id} userId={user.id}></Message>)}
                 </div>
             </div>
         )

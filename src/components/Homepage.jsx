@@ -3,12 +3,12 @@ import kiwi from '../kiwi.jpg';
 import '../App.css';
 import { connect } from 'react-redux'
 import { login } from '../actions'
-
+import { withRouter } from 'react-router-dom';
 
 
 class Homepage extends Component {
       loginFetch = (username, password) => {
-        const { dispatch } = this.props;
+        const { dispatch, history } = this.props;
         let loginMethod = {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -20,7 +20,13 @@ class Homepage extends Component {
         }
         fetch('https://kwitter-api.herokuapp.com/auth/login', loginMethod)
           .then(response => response.json())
-          .then(data => dispatch(login(username, data.token)))
+          .then(data => {
+            if(data.success) {
+              dispatch(login(username, data.token))
+              history.push('/userFeed');
+            }else {
+              alert("Login Unsuccessful")
+            }})
       }
     render() {
       return (
@@ -32,11 +38,11 @@ class Homepage extends Component {
           <p className="heading">
             Click Login to start Kwitting or Sign Up to make an account!!!
           </p>
-          <button class = "login" >Login</button>
-          <button class = "signup" onClick={evt => this.loginFetch('test', 'test')}>Sign Up!!</button>
+          <button className = "login" onClick={evt => this.loginFetch('test', 'test')}>Login</button>
+          <button className = "signup" >Sign Up!!</button>
         </div>
       );
     }
   }
   
-  export default connect()(Homepage);
+  export default withRouter(connect()(Homepage));

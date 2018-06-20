@@ -1,12 +1,12 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import {REGISTER, LOGIN, LOGOUT, LIKE, UNLIKE, POST_MESSAGE, GET_ALL_MESSAGES, GET_MESSAGE_BY_ID, DEL_MESSAGE_BY_ID, GET_USER, DEL_USER} from '../actions';
 import * as R from 'ramda';
-import thunk from 'redux-thunk'
 
 const initialState = {
     user: {
-        username: "nlhowell12",
-        token: ""
+        username: "",
+        token: "",
+        userId: 1
     },
     messages: [
         {
@@ -48,13 +48,14 @@ const kwitterReducer = (state = initialState, action) => {
             const userLens = R.lensProp('user');
             return R.set(userLens, {
                 username: action.user.username,
-                displayName: action.user.displayName,
                 token: action.user.token
             }, state)
         case LOGOUT:
             return {}
         case LIKE:
-            return {}
+        const messageLens = R.find(R.propEq('id', action.like.messageId))
+        const likeArrayLens = R.lensPath([messageLens, 'likes'])
+            return R.append(action.like, likeArrayLens)
         case UNLIKE: 
             return {}
         case POST_MESSAGE:
@@ -74,5 +75,5 @@ const kwitterReducer = (state = initialState, action) => {
     }
 }
 
-const store = createStore(kwitterReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunk))
+const store = createStore(kwitterReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 export default store

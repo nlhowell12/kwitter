@@ -10,10 +10,9 @@ class App extends Component {
       <div className="App">
         <React.Fragment>
             <Switch>
-            <Route exact path='/' render={() => <Homepage></Homepage>}/>
-            <Route path='/userFeed' render={() => <Userfeed></Userfeed>}/>
+              <Route exact path='/' render={() => <Homepage></Homepage>}/>
+              <Route path='/userFeed' render={() => <Userfeed></Userfeed>}/>
             </Switch>
-          <p>{"This is just a placeholder, we'll get something up here as we progress"}</p>
         </React.Fragment>
       </div>
     );
