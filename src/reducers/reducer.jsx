@@ -6,7 +6,6 @@ import thunk from 'redux-thunk'
 const initialState = {
     user: {
         username: "nlhowell12",
-        displayName: 'Nick Howell',
         token: ""
     },
     messages: [
