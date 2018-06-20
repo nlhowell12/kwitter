@@ -9,18 +9,16 @@ const initialState = {
 };
 
 const kwitterReducer = (state = initialState, action) => {
-    const userLens = R.lensProp('user');
-    const likeArrayLens = R.lensPath(['messages', R.findIndex(R.propEq('messageId', action.like.messageId)), 'likes'])
     
     switch(action.type) {
         case REGISTER:
-            return R.set(userLens, action.user, state)
+            return {}
         case LOGIN:
             return {}
         case LOGOUT:
-            return R.set(userLens, {} , state)
+            return {}
         case LIKE:
-            return data => R.append(data, likeArrayLens) 
+            return {}
         case UNLIKE: 
             return {}
         case POST_MESSAGE:
