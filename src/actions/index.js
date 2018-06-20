@@ -37,10 +37,11 @@ export const logout = () => {
     }
 }
 
-export const like = (like) => {
+export const like = (like, messageId) => {
     return {
         type: LIKE,
-        like
+        like,
+        messageId
     }
 }
 

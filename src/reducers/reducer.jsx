@@ -6,38 +6,10 @@ const initialState = {
     user: {
         username: "",
         token: "",
-        userId: 1
+        userId: 1,
+        displayName: "Nick"
     },
-    messages: [
-        {
-            id: 3,
-            text: "This is a test",
-            username: "Nick",
-            userId: 2,
-            createdAt: "2018-06-18T17:51:00.280Z",
-            updatedAt: "2018-06-18T17:51:00.280Z",
-            likes: [
-                {
-                    "id": 3,
-                    "userId": 2,
-                    "messageId": 3,
-                    "createdAt": "2018-06-18T17:53:23.067Z",
-                    "updatedAt": "2018-06-18T17:53:23.067Z"
-                },
-                {
-                    "id": 6,
-                    "userId": 2,
-                    "messageId": 3,
-                    "createdAt": "2018-06-19T14:19:25.104Z",
-                    "updatedAt": "2018-06-19T14:19:25.104Z"
-                }
-            ]
-    },
-        {
-            text: "This is  a test2",
-            username: 'Ben'
-        }
-    ]
+    messages: []
 };
 
 const kwitterReducer = (state = initialState, action) => {
@@ -53,9 +25,11 @@ const kwitterReducer = (state = initialState, action) => {
         case LOGOUT:
             return {}
         case LIKE:
-        const messageLens = R.find(R.propEq('id', action.like.messageId))
-        const likeArrayLens = R.lensPath([messageLens, 'likes'])
-            return R.append(action.like, likeArrayLens)
+        // This is overwriting all of state, otherwise works great.  MessageLens finds the correct message.
+        const messageLens = R.find(R.propEq('id', action.messageId), state.messages)
+            return {...state, 
+                messages: [...state.messages, R.append(action.like, messageLens.likes)]
+            }
         case UNLIKE: 
             return {}
         case POST_MESSAGE:

@@ -8,12 +8,11 @@ class Message extends Component {
     }
     likeMessage = () => {
         const { token, dispatch, messageId, userId } = this.props;
-        const { like } = this.state;
 
         let method = {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer' + token,
+                'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             },
             body: {
@@ -23,7 +22,9 @@ class Message extends Component {
         }
         fetch('https://kwitter-api.herokuapp.com/likes', method)
             .then(response => response.json())
-            .then(data => dispatch(like(data.like.userId, data.like.messageId)))
+            .then(data => {
+                console.log(data);
+                dispatch(like(data, messageId))})
     }
     render () {
         const { text, username } = this.props

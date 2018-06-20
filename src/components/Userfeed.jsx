@@ -10,7 +10,6 @@ class Userfeed extends Component {
         fetch('https://kwitter-api.herokuapp.com/messages')
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             dispatch(getAllMessages(data.messages))})
     }
     componentDidMount() {
@@ -26,7 +25,7 @@ class Userfeed extends Component {
                 </div>
                 <div id='messageFeed'>
                 <input type="text" id='newMessage' placeholder={"Start a new kwit here"}/>
-                    {messages.map((message, id) => <Message key={id} text={message.text} username={message.username} messageId={message.id} userId={user.id}></Message>)}
+                    {messages.map((message, id) => <Message key={id} text={message.text} username={message.username} messageId={message.id} userId={message.userId}></Message>)}
                 </div>
             </div>
         )
