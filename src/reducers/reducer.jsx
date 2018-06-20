@@ -4,29 +4,64 @@ import * as R from 'ramda';
 import thunk from 'redux-thunk'
 
 const initialState = {
-    user: {},
-    messages: []
+    user: {
+        username: "nlhowell12",
+        displayName: 'Nick Howell',
+        token: ""
+    },
+    messages: [
+        {
+            id: 3,
+            text: "This is a test",
+            username: "Nick",
+            userId: 2,
+            createdAt: "2018-06-18T17:51:00.280Z",
+            updatedAt: "2018-06-18T17:51:00.280Z",
+            likes: [
+                {
+                    "id": 3,
+                    "userId": 2,
+                    "messageId": 3,
+                    "createdAt": "2018-06-18T17:53:23.067Z",
+                    "updatedAt": "2018-06-18T17:53:23.067Z"
+                },
+                {
+                    "id": 6,
+                    "userId": 2,
+                    "messageId": 3,
+                    "createdAt": "2018-06-19T14:19:25.104Z",
+                    "updatedAt": "2018-06-19T14:19:25.104Z"
+                }
+            ]
+    },
+        {
+            text: "This is  a test2",
+            username: 'Ben'
+        }
+    ]
 };
 
 const kwitterReducer = (state = initialState, action) => {
-    const userLens = R.lensProp('user');
-    const likeArrayLens = R.lensPath(['messages', R.findIndex(R.propEq('messageId', action.like.messageId)), 'likes'])
-    
     switch(action.type) {
         case REGISTER:
-            return R.set(userLens, action.user, state)
-        case LOGIN:
             return {}
+        case LOGIN:
+            const userLens = R.lensProp('user');
+            return R.set(userLens, {
+                username: action.user.username,
+                displayName: action.user.displayName,
+                token: action.user.token
+            }, state)
         case LOGOUT:
-            return R.set(userLens, {} , state)
+            return {}
         case LIKE:
-            return data => R.append(data, likeArrayLens) 
+            return {}
         case UNLIKE: 
             return {}
         case POST_MESSAGE:
             return {}
         case GET_ALL_MESSAGES:
-            return {}
+            return R.set('messages',  )
         case GET_MESSAGE_BY_ID:
             return {}
         case DEL_MESSAGE_BY_ID:
