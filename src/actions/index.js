@@ -61,9 +61,10 @@ export const postMessage = (text) => {
     }
 }
 
-export const getAllMessage = (messages) => {
+export const getAllMessages = (messages) => {
     return {
-        type: GET_ALL_MESSAGES
+        type: GET_ALL_MESSAGES,
+        messages
     }
 }
 

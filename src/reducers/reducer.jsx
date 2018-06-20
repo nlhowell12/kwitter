@@ -61,7 +61,8 @@ const kwitterReducer = (state = initialState, action) => {
         case POST_MESSAGE:
             return {}
         case GET_ALL_MESSAGES:
-            return R.set('messages',  )
+            
+            return R.set(R.lensPath(['messages']), action.messages, state)
         case GET_MESSAGE_BY_ID:
             return {}
         case DEL_MESSAGE_BY_ID:

@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import Message from './Message.jsx'
 import { connect } from 'react-redux';
+import { getAllMessages } from '../actions'
 
 class Userfeed extends Component {
+    fetchMessages = () => {
+        const { dispatch } = this.props;
+
+        fetch('https://kwitter-api.herokuapp.com/messages')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            dispatch(getAllMessages(data.messages))})
+    }
+    componentDidMount() {
+        this.fetchMessages()
+    }
     render() {
         const { messages, user } = this.props
-        console.log(messages)
+        
         return (
             <div id='userFeed'>
                 <div id='profileInfo'>
