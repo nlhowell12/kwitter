@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import kiwi from '../kiwi.jpg';
 import '../App.css';
-import '../App.js';
 
 class Homepage extends Component {
     render() {
