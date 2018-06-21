@@ -23,7 +23,14 @@ const kwitterReducer = (state = initialState, action) => {
                 token: action.user.token
             }, state)
         case LOGOUT:
-            return {}
+            let loggedOutState = {
+                ...state,
+                user: {
+                    ...state.user,
+                    token: ""
+                }
+            }
+            return loggedOutState
         case LIKE:
             let newLikeState = {
             ...state, 

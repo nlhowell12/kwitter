@@ -3,7 +3,7 @@ import Message from './Message.jsx'
 import { connect } from 'react-redux';
 import { getAllMessages } from '../actions'
 import { withRouter } from 'react-router-dom'
-import { postMessage } from '../actions'
+import { postMessage, logout } from '../actions'
 class Userfeed extends Component {
     state = {
         newMessage: ""
@@ -45,6 +45,11 @@ class Userfeed extends Component {
                 this.setState({newMessage: ""})
             })
     }
+    logMeOut = () => {
+        const { history, dispatch } = this.props
+        dispatch(logout())
+        history.push('/')
+    }
     render() {
         const { messages, user } = this.props;
         const { newMessage } = this.state;
@@ -52,6 +57,7 @@ class Userfeed extends Component {
             <div id='userFeed'>
                 <div id='profileInfo'>
                     <a href="">{user.username}</a>
+                    <button id=""logout onClick={evt => this.logMeOut()}>LogOut</button>
                 </div>
                 <div id='messageFeed'>
                 <input type="text" id='newMessage' placeholder={"Start a new kwit here"} value={newMessage} onChange={this.onChange('newMessage')} onKeyPress={evt => evt.key === "Enter" ? this.postNewMessage() : null}/>
