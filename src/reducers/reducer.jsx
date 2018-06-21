@@ -25,17 +25,26 @@ const kwitterReducer = (state = initialState, action) => {
         case LOGOUT:
             return {}
         case LIKE:
-        // const messageLens = R.findIndex(R.propEq('id', action.messageId), state.messages)
-        let newState = {
+            let newLikeState = {
             ...state, 
             messages: 
                 state.messages.map(message => action.messageId === message.id ? {...message, likes: [...message.likes, action.like.like]}: message)   
         }
-            return newState
-        case UNLIKE: 
-            return {}
+            return newLikeState
+        case UNLIKE:
+            let userId = userId => action.userId === userId
+            let newUnlikeState = {
+                ...state, 
+                messages: 
+                    state.messages.map(message => action.messageId === message.id ? {...message, likes: R.filter(!userId, message.likes)}: message)   
+        } 
+            return newUnlikeState
         case POST_MESSAGE:
-            return {}
+            let newMessageState = {
+                ...state,
+                messages: [...state.messages, action.message]
+            }
+            return newMessageState
         case GET_ALL_MESSAGES:
             return R.set(R.lensPath(['messages']), action.messages, state)
         case GET_MESSAGE_BY_ID:
