@@ -48,9 +48,14 @@
 .heading {
   font-family: Helvetica;
   font-size: 26px;
-  text-align: center;
+  text-align: left;
   color: green;
   border-bottom: 2px black solid;
+}
+
+#loginWrapper {
+  display: flex;
+
 }
 
 .login {
@@ -59,9 +64,11 @@
   background-color: green;
   color: white;
   font-size: 15px;
-  position: relative;
-  left: 475px;
-  top: 100px;
+}
+
+#signupWrapper {
+display: flex;
+
 }
 
 .signup {
@@ -70,9 +77,6 @@
   background-color: green;
   color: white;
   font-size: 15px;
-  position: relative;
-  left: 1000px;
-  top: 100px;
 }
 
 p {

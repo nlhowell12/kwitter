@@ -20,12 +20,13 @@ export const register = (username, password, displayName) => {
     }
 }
 
-export const login = (username, token) => {
+export const login = (username, token, userId) => {
     return {
         type: LOGIN,
         user: {
             username, 
-            token
+            token,
+            userId
         }
     }
 }
@@ -36,25 +37,11 @@ export const logout = () => {
     }
 }
 
-export const like = (userId, messageId, token) => {
-    let method = {
-        method: 'POST',
-        headers: {
-            'Authorization': token,
-            'Content-Type': 'application/json'
-        },
-        body: {
-            userId,
-            messageId
-        } 
-    }
-    fetch('https://kwitter-api.herokuapp.com/likes', method)
+export const like = (like, messageId) => {
     return {
         type: LIKE,
-        like: {
-            userId,
-            messageId
-        }
+        like,
+        messageId
     }
 }
 
@@ -75,9 +62,10 @@ export const postMessage = (text) => {
     }
 }
 
-export const getAllMessage = () => {
+export const getAllMessages = (messages) => {
     return {
-        type: GET_ALL_MESSAGES
+        type: GET_ALL_MESSAGES,
+        messages
     }
 }
 
