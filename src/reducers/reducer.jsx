@@ -7,7 +7,7 @@ const initialState = {
         username: "",
         token: "",
         userId: 1,
-        displayName: "Nick"
+        displayName: ""
     },
     messages: []
 };
@@ -15,7 +15,7 @@ const initialState = {
 const kwitterReducer = (state = initialState, action) => {
     switch(action.type) {
         case REGISTER:
-            return {}
+            return state;
         case LOGIN:
             const userLens = R.lensProp('user');
             return R.set(userLens, {
@@ -25,17 +25,18 @@ const kwitterReducer = (state = initialState, action) => {
         case LOGOUT:
             return {}
         case LIKE:
-        // This is overwriting all of state, otherwise works great.  MessageLens finds the correct message.
-        const messageLens = R.find(R.propEq('id', action.messageId), state.messages)
-            return {...state, 
-                messages: [...state.messages, R.append(action.like, messageLens.likes)]
-            }
+        // const messageLens = R.findIndex(R.propEq('id', action.messageId), state.messages)
+        let newState = {
+            ...state, 
+            messages: 
+                state.messages.map(message => action.messageId === message.id ? {...message, likes: [...message.likes, action.like.like]}: message)   
+        }
+            return newState
         case UNLIKE: 
             return {}
         case POST_MESSAGE:
             return {}
         case GET_ALL_MESSAGES:
-            
             return R.set(R.lensPath(['messages']), action.messages, state)
         case GET_MESSAGE_BY_ID:
             return {}

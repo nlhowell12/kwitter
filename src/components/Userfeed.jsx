@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Message from './Message.jsx'
 import { connect } from 'react-redux';
 import { getAllMessages } from '../actions'
+import { withRouter } from 'react-router-dom'
 
 class Userfeed extends Component {
     fetchMessages = () => {
@@ -21,7 +22,7 @@ class Userfeed extends Component {
         return (
             <div id='userFeed'>
                 <div id='profileInfo'>
-                    <a href="">{user.displayName}</a>
+                    <a href="">{user.username}</a>
                 </div>
                 <div id='messageFeed'>
                 <input type="text" id='newMessage' placeholder={"Start a new kwit here"}/>
@@ -40,4 +41,4 @@ const mapStateToProps = (state) => {
     
 }
 
-export default connect(mapStateToProps)(Userfeed)
+export default withRouter(connect(mapStateToProps)(Userfeed))

@@ -8,22 +8,21 @@ class Message extends Component {
     }
     likeMessage = () => {
         const { token, dispatch, messageId, userId } = this.props;
-
         let method = {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 userId,
                 messageId
-            } 
+            }),
+            mode: 'cors' 
         }
         fetch('https://kwitter-api.herokuapp.com/likes', method)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 dispatch(like(data, messageId))})
     }
     render () {
@@ -34,7 +33,7 @@ class Message extends Component {
                 <button type='delete' className='deleteMessage'>X</button>
                 <div>
                     <button className='likeButton' onClick ={evt => like === true ? this.unlikeMessage() : this.likeMessage()}>Like</button>
-                    <div className="likesDisplay">Nick liked this</div>
+                    <div className="likesDisplay"></div>
                 </div>
                 <p className="messageText">
                 {text}
