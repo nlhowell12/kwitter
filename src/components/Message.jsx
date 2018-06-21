@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { like, unlike } from '../actions';
+import { like, unlike, delMessageByID } from '../actions';
 import * as R from 'ramda';
 
 
@@ -50,12 +50,26 @@ class Message extends Component {
             .then(response => response.json())
             .then(data => console.log(data))
     }
+    deleteMessage = () => {
+        const { token, dispatch, messageId } = this.props;
+        let method = {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json' 
+            },
+            mode: 'cors'
+        }
+        fetch(`https://kwitter-api.herokuapp.com/messages/${messageId}`, method)
+            .then(response => response.json())
+            .then(dispatch(delMessageByID(messageId)))
+    }
     render () {
         const { text, username } = this.props
         return (
             <div className='message'>
                 <div id='messageUserInfo'>{username}</div>
-                <button type='delete' className='deleteMessage'>X</button>
+                <button type='delete' className='deleteMessage' onClick={evt => this.deleteMessage()}>X</button>
                 <div>
                     <button className='likeButton' onClick ={evt => this.likeMessage()}>Like</button>
                     <div className="likesDisplay"></div>

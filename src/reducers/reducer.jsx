@@ -50,7 +50,11 @@ const kwitterReducer = (state = initialState, action) => {
         case GET_MESSAGE_BY_ID:
             return {}
         case DEL_MESSAGE_BY_ID:
-            return {}
+            let delMessageState = {
+                ...state,
+                messages: state.messages.filter(message => message.id !== action.id)
+            }
+            return delMessageState;
         case GET_USER:
             return {}
         case DEL_USER:
