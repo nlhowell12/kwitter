@@ -62,7 +62,7 @@ class Homepage extends Component {
       return (
         <div className="Homepage">
           <header className="HP-header">
-            <img src={kiwi} className="App-logo" alt="kiwi" />
+            <img src={kiwi} className="App-logo" alt="kiwi" height="200px" width= "200px" />
             <h1 className="App-title">Welcome to Kwitter</h1>
           </header>
           <p className="heading">

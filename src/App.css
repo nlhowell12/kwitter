@@ -85,6 +85,10 @@ p {
 
 img {
   position: relative;
-  left: 700px;
+  left: 450px;
   bottom: 30px;
+}
+
+.App-title {
+  float: left;
 }
