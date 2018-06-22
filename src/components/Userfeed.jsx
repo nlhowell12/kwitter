@@ -42,7 +42,6 @@ class Userfeed extends Component {
         fetch('https://kwitter-api.herokuapp.com/messages', method)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 dispatch(postMessage(data))
                 this.setState({newMessage: ""})
             })} else {
@@ -69,7 +68,7 @@ class Userfeed extends Component {
                     </div>
                 </a>
             <div id='ui feed'>
-                <div className="ui relaxed list" id='messageFeed'>
+                <div className="ui relaxed right floated list">
                 <div className="ui focus fluid input">
                     <input id="newMessage" type="text" placeholder="Start a new kwit here"  value={newMessage} onChange={this.onChange('newMessage')} onKeyPress={evt => evt.key === "Enter" ? this.postNewMessage() : null}/>
                 </div>
