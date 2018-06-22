@@ -26,12 +26,11 @@ class Homepage extends Component {
           .then(response => response.json())
           .then(data => {
             if(data.success) {
-              console.log(data)
               dispatch(login(username, data.token, data.id))
+              history.push('/userFeed')
             }else {
               alert("Login Unsuccessful")
             }})
-          .then(history.push('/userFeed'))
       }
       signupFetch = (username, password, displayName) => {
         let signupMethod = {
@@ -60,26 +59,55 @@ class Homepage extends Component {
     render() {
       const { name, password, displayName } = this.state;
       return (
-        <div className="Homepage">
-          <header className="HP-header">
-            <img src={kiwi} className="App-logo" alt="kiwi" height="200px" width= "200px" />
-            <h1 className="App-title">Welcome to Kwitter</h1>
-          </header>
-          <p className="heading">
-            Click Login to start Kwitting or Sign Up to make an account!!!
-          </p>
-          <div className="ui container" id="loginWrapper">
-            <input type="text" placeholder="Username" onChange={this.onChange("name")}/>
-            <input type="text" placeholder="Password" onChange={this.onChange("password")}/>
-            <button className = "ui button" onClick={evt => this.loginFetch(name, password)}>Login</button>
+        <div className="ui centered middle aligned grid">
+          <div className="column">
+          <h2 className="ui header">
+            <img src={kiwi} className="ui circular image" alt="kiwi"/>
+            <div className="content">
+            Click Login/Sign Up to start Kwitting!
+            </div>
+          </h2>
+          <div className="ui large form">
+            <div className="ui stacked segment">
+              <div className="field">
+                <div className="ui left icon input">
+                  <i className="user icon"></i>
+                  <input type="text" placeholder="Username" onChange={this.onChange("name")}/>
+                </div>
+              </div>
+              <div className="field">
+                <div className="ui left icon input">
+                  <i className="lock icon"></i>
+                  <input type="password" placeholder="Password" onChange={this.onChange("password")}/>     
+                </div>
+              </div>
+            <button className = "ui fluid large button" onClick={evt => this.loginFetch(name, password)}>Login</button>
+            </div>
           </div>
-          <div className="ui container" id="signupWrapper">
-            <input type="text" placeholder="Username" onChange={this.onChange("name")}/>
-            <input type="text" placeholder="Password" onChange={this.onChange("password")}/>
-            <input type="text" placeholder="Display Name" onChange={this.onChange("displayName")}/>
-            <button className = "ui button" onClick={evt => this.signupFetch(name, password, displayName)}>Sign Up!!</button>
+          <div className="ui large form">
+            <div className="ui stacked segment">
+              <div className="field">
+                <div className="ui left icon input">
+                  <i className="user icon"></i>
+                  <input type="text" placeholder="Username" onChange={this.onChange("name")}/>
+                </div>
+              </div>
+              <div className="field">
+                <div className="ui left icon input">
+                  <i className="lock icon"></i>
+                  <input type="password" placeholder="Password" onChange={this.onChange("password")}/>     
+                </div>
+              </div>
+              <div className="field">
+                <div className="ui left icon input">
+                  <i className="user icon"></i>
+                  <input type="text" placeholder="Display Name" onChange={this.onChange("displayName")}/>
+                </div>
+              </div>
+              <button className = "ui fluid large button" onClick={evt => this.signupFetch(name, password, displayName)}>Sign Up!!</button>
+            </div>
           </div>
-          
+          </div>
         </div>
       );
     }

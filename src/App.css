@@ -45,50 +45,7 @@
   right: 0;
 }
 
-.heading {
-  font-family: Helvetica;
-  font-size: 26px;
-  text-align: left;
-  color: green;
-  border-bottom: 2px black solid;
+.column {
+  max-width: 500px;
 }
 
-#loginWrapper {
-  display: flex;
-
-}
-
-.login {
-  height: 50px;
-  width: 95px;
-  background-color: green;
-  color: white;
-  font-size: 15px;
-}
-
-#signupWrapper {
-display: flex;
-
-}
-
-.signup {
-  height: 50px;
-  width: 95px;
-  background-color: green;
-  color: white;
-  font-size: 15px;
-}
-
-p {
-  text-align: center;
-}
-
-img {
-  position: relative;
-  left: 450px;
-  bottom: 30px;
-}
-
-.App-title {
-  float: left;
-}
