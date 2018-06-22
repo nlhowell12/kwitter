@@ -41,6 +41,9 @@ export const login = (username, password) => {
 }
 
 export const logout = () => {
+    let logoutMethod = {
+        method: 'GET',
+    }
     return {
         type: LOGOUT
     }
