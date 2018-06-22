@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getAllMessages } from '../actions'
 import { withRouter } from 'react-router-dom'
 import { postMessage, logout } from '../actions'
+
 class Userfeed extends Component {
     state = {
         newMessage: ""
@@ -37,13 +38,17 @@ class Userfeed extends Component {
             }),
             mode: 'cors'
         }
+        if(newMessage !== ""){
         fetch('https://kwitter-api.herokuapp.com/messages', method)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 dispatch(postMessage(data))
                 this.setState({newMessage: ""})
-            })
+            })} else {
+                alert("Please enter a new kwit before submitting.")
+            }
+
     }
     logMeOut = () => {
         const { history, dispatch } = this.props
@@ -54,15 +59,23 @@ class Userfeed extends Component {
         const { messages, user } = this.props;
         const { newMessage } = this.state;
         return (
-            <div id='userFeed'>
-                <div id='profileInfo'>
-                    <a href="">{user.username}</a>
-                    <button id=""logout onClick={evt => this.logMeOut()}>LogOut</button>
+            <div>
+                <a className="ui card">
+                    <div className="content">
+                    <div>{user.username || "User"}</div>
+                    <div className="meta">{user.title || "Kwitaholic"}</div>
+                    <div className="description">{user.bio || "I see a little sillouetto of a man..."}</div>
+                    <button className="ui button" floated="right" onClick={evt => this.logMeOut()}>LogOut</button>
+                    </div>
+                </a>
+            <div id='ui feed'>
+                <div className="ui relaxed list" id='messageFeed'>
+                <div className="ui focus fluid input">
+                    <input id="newMessage" type="text" placeholder="Start a new kwit here"  value={newMessage} onChange={this.onChange('newMessage')} onKeyPress={evt => evt.key === "Enter" ? this.postNewMessage() : null}/>
                 </div>
-                <div id='messageFeed'>
-                <input type="text" id='newMessage' placeholder={"Start a new kwit here"} value={newMessage} onChange={this.onChange('newMessage')} onKeyPress={evt => evt.key === "Enter" ? this.postNewMessage() : null}/>
-                    {messages.map((message, id) => <Message key={id} text={message.text} username={message.username} messageId={message.id} userId={message.userId}></Message>)}
+                    {messages.map((message, id) => <Message key={id} text={message.text} username={message.username} messageId={message.id} userId={message.userId} likes={message.likes}></Message>)}
                 </div>
+            </div>
             </div>
         )
     }

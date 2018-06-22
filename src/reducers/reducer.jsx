@@ -6,7 +6,7 @@ const initialState = {
     user: {
         username: "",
         token: "",
-        userId: 1,
+        userId: 0,
         displayName: ""
     },
     messages: []
@@ -20,7 +20,8 @@ const kwitterReducer = (state = initialState, action) => {
             const userLens = R.lensProp('user');
             return R.set(userLens, {
                 username: action.user.username,
-                token: action.user.token
+                token: action.user.token,
+                userId: action.user.userId
             }, state)
         case LOGOUT:
             let loggedOutState = {
@@ -39,17 +40,20 @@ const kwitterReducer = (state = initialState, action) => {
         }
             return newLikeState
         case UNLIKE:
-            let userId = userId => action.userId === userId
             let newUnlikeState = {
                 ...state, 
                 messages: 
-                    state.messages.map(message => action.messageId === message.id ? {...message, likes: R.filter(!userId, message.likes)}: message)   
+                    state.messages.map(message => action.like.messageId === message.id ? {...message, likes: message.likes.filter(like => like.id !== action.like.likeId)}: message)   
         } 
             return newUnlikeState
         case POST_MESSAGE:
+            let newMessage = {
+                ...action.message, 
+                likes: []
+            }
             let newMessageState = {
                 ...state,
-                messages: [...state.messages, action.message]
+                messages: [...state.messages, newMessage]
             }
             return newMessageState
         case GET_ALL_MESSAGES:
