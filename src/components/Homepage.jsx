@@ -26,7 +26,6 @@ class Homepage extends Component {
           .then(response => response.json())
           .then(data => {
             if(data.success) {
-              console.log(data)
               dispatch(login(username, data.token, data.id))
               history.push('/userFeed')
             }else {
