@@ -55,10 +55,10 @@ export const unlike = (userId, messageId) => {
     }
 }
 
-export const postMessage = (text) => {
+export const postMessage = (message) => {
     return {
         type: POST_MESSAGE,
-        text
+        message: message.messages
     }
 }
 
