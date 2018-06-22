@@ -41,10 +41,6 @@ class Message extends Component {
         let likeLens = R.findIndex(R.propEq('userId', userId))(messages[messageLens].likes)
         let likePath = R.lensPath([messageLens, 'likes', likeLens])
         let id = R.view(likePath, messages).id
-        console.log(messageLens)
-        console.log(likeLens)
-        console.log(R.view(likePath, messages));
-        console.log(id);
         fetch(`https://kwitter-api.herokuapp.com/likes/${id}`, method)
             .then(response => response.json())
             .then(data => console.log(data))
@@ -63,10 +59,10 @@ class Message extends Component {
             .then(dispatch(delMessageByID(messageId)))
     }
     render () {
-        const { text, likes } = this.props
+        const { text, likes, userId, loggedInUser } = this.props
         return (
             <div className='ui segment'>
-                <button type='delete' className="ui right floated button" onClick={evt => this.deleteMessage()}>Delete</button>
+                {userId === loggedInUser ? <button type='delete' className="ui right floated button" onClick={evt => this.deleteMessage()}>Delete</button> : null}
                 <div className="ui right labeled button" onClick={evt => this.deleteLike()}>
                     <button className='ui red button' tabIndex="0"><i aria-hidden={true} className="heart icon"></i>Like</button>
                     <a className="ui left pointing basic label">{likes.length}</a>
@@ -83,6 +79,7 @@ const mapStateToProps = (state) => {
     return {
         token: state.user.token,
         messages: state.messages,
+        loggedInUser: state.user.userId
     }
 }
 export default withRouter(connect(mapStateToProps)(Message))
