@@ -28,10 +28,10 @@ class Homepage extends Component {
             if(data.success) {
               console.log(data)
               dispatch(login(username, data.token, data.id))
-              history.push('/userFeed');
             }else {
               alert("Login Unsuccessful")
             }})
+          .then(history.push('/userFeed'))
       }
       signupFetch = (username, password, displayName) => {
         let signupMethod = {

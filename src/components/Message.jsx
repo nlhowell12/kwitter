@@ -26,6 +26,7 @@ class Message extends Component {
             .then(response => response.json())
             .then(data => {
                 dispatch(like(data, messageId))})
+        this.setState({like: !this.state.like})
     }
     deleteLike = () => {
         const { token, dispatch, messageId, userId, messages } = this.props;
@@ -41,9 +42,10 @@ class Message extends Component {
         let likeLens = R.findIndex(R.propEq('userId', userId))(messages[messageLens].likes)
         let likePath = R.lensPath([messageLens, 'likes', likeLens])
         let id = R.view(likePath, messages).id
+        this.setState({like: !this.state.like})
         fetch(`https://kwitter-api.herokuapp.com/likes/${id}`, method)
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => dispatch(unlike(id, messageId)))
     }
     deleteMessage = () => {
         const { token, dispatch, messageId } = this.props;
@@ -59,11 +61,12 @@ class Message extends Component {
             .then(dispatch(delMessageByID(messageId)))
     }
     render () {
-        const { text, likes, userId, loggedInUser } = this.props
+        const { text, likes, userId, loggedInUser } = this.props;
+        const { like } = this.state;
         return (
             <div className='ui segment'>
                 {userId === loggedInUser ? <button type='delete' className="ui right floated button" onClick={evt => this.deleteMessage()}>Delete</button> : null}
-                <div className="ui right labeled button" onClick={evt => this.deleteLike()}>
+                <div className="ui right labeled button" onClick={evt=> like ? this.deleteLike() : this.likeMessage()}>
                     <button className='ui red button' tabIndex="0"><i aria-hidden={true} className="heart icon"></i>Like</button>
                     <a className="ui left pointing basic label">{likes.length}</a>
                 </div>

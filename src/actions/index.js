@@ -45,11 +45,11 @@ export const like = (like, messageId) => {
     }
 }
 
-export const unlike = (userId, messageId) => {
+export const unlike = (likeId, messageId) => {
     return {
         type: UNLIKE,
         like: {
-            userId,
+            likeId,
             messageId
         }
     }

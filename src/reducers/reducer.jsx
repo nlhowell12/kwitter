@@ -6,7 +6,7 @@ const initialState = {
     user: {
         username: "",
         token: "",
-        userId: 1,
+        userId: 0,
         displayName: ""
     },
     messages: []
@@ -40,11 +40,10 @@ const kwitterReducer = (state = initialState, action) => {
         }
             return newLikeState
         case UNLIKE:
-            let userId = userId => action.userId === userId
             let newUnlikeState = {
                 ...state, 
                 messages: 
-                    state.messages.map(message => action.messageId === message.id ? {...message, likes: R.filter(!userId, message.likes)}: message)   
+                    state.messages.map(message => action.like.messageId === message.id ? {...message, likes: message.likes.filter(like => like.id !== action.like.likeId)}: message)   
         } 
             return newUnlikeState
         case POST_MESSAGE:
