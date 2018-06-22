@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { login } from '../actions'
 import { withRouter } from 'react-router-dom';
 
-
 class Homepage extends Component {
       state = {
         name: "",
@@ -27,7 +26,8 @@ class Homepage extends Component {
           .then(response => response.json())
           .then(data => {
             if(data.success) {
-              dispatch(login(username, data.token))
+              console.log(data)
+              dispatch(login(username, data.token, data.id))
               history.push('/userFeed');
             }else {
               alert("Login Unsuccessful")
@@ -68,16 +68,16 @@ class Homepage extends Component {
           <p className="heading">
             Click Login to start Kwitting or Sign Up to make an account!!!
           </p>
-          <div id="loginWrapper">
+          <div className="ui container" id="loginWrapper">
             <input type="text" placeholder="Username" onChange={this.onChange("name")}/>
             <input type="text" placeholder="Password" onChange={this.onChange("password")}/>
-            <button className = "login" onClick={evt => this.loginFetch(name, password)}>Login</button>
+            <button className = "ui button" onClick={evt => this.loginFetch(name, password)}>Login</button>
           </div>
-          <div id="signupWrapper">
+          <div className="ui container" id="signupWrapper">
             <input type="text" placeholder="Username" onChange={this.onChange("name")}/>
             <input type="text" placeholder="Password" onChange={this.onChange("password")}/>
             <input type="text" placeholder="Display Name" onChange={this.onChange("displayName")}/>
-            <button className = "signup" onClick={evt => this.signupFetch(name, password, displayName)}>Sign Up!!</button>
+            <button className = "ui button" onClick={evt => this.signupFetch(name, password, displayName)}>Sign Up!!</button>
           </div>
           
         </div>

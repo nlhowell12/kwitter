@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { like, unlike, delMessageByID } from '../actions';
 import * as R from 'ramda';
-
+import { withRouter } from 'react-router-dom'
 
 class Message extends Component {
     state = {
-        like: false
+        like: false,
     }
     likeMessage = () => {
         const { token, dispatch, messageId, userId } = this.props;
@@ -22,7 +22,6 @@ class Message extends Component {
             }),
             mode: 'cors' 
         }
-        this.setState = {like: !this.state.like}
         fetch('https://kwitter-api.herokuapp.com/likes', method)
             .then(response => response.json())
             .then(data => {
@@ -61,20 +60,18 @@ class Message extends Component {
             mode: 'cors'
         }
         fetch(`https://kwitter-api.herokuapp.com/messages/${messageId}`, method)
-            .then(response => response.json())
             .then(dispatch(delMessageByID(messageId)))
     }
     render () {
-        const { text, username } = this.props
+        const { text, likes } = this.props
         return (
-            <div className='message'>
-                <div id='messageUserInfo'>{username}</div>
-                <button type='delete' className='deleteMessage' onClick={evt => this.deleteMessage()}>X</button>
-                <div>
-                    <button className='likeButton' onClick ={evt => this.likeMessage()}>Like</button>
-                    <div className="likesDisplay"></div>
+            <div className='ui segment'>
+                <button type='delete' className="ui right floated button" onClick={evt => this.deleteMessage()}>Delete</button>
+                <div className="ui right labeled button" onClick={evt => this.deleteLike()}>
+                    <button className='ui red button' tabIndex="0"><i aria-hidden={true} className="heart icon"></i>Like</button>
+                    <a className="ui left pointing basic label">{likes.length}</a>
                 </div>
-                <p className="messageText">
+                <p className="content">
                 {text}
                 </p>
             </div>
@@ -88,4 +85,4 @@ const mapStateToProps = (state) => {
         messages: state.messages,
     }
 }
-export default connect(mapStateToProps)(Message)
+export default withRouter(connect(mapStateToProps)(Message))
